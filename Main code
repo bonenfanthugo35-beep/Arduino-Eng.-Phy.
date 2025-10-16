@@ -24,3 +24,92 @@ void loop() {
   Serial.print("Distance: ");
   Serial.println(distance);
 }
+
+
+
+
+-start of the real code-
+const int IN1 = 8; // Direction pin 1
+const int IN2 = 7; // Direction pin 2
+const int IN3 = 6;
+const int IN4 = 5;
+const int ENA = 4;
+const int ENB = 9;
+const int trigPin = 13;
+const int echoPin = 12;
+//Moves the motor one
+void directionMoveOne(IN1, IN2, ENA, speed) {
+  if (Speed > 0) {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    analogWrite(ENA, speed);
+    else if (speed < 0){
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+      analogWrite(ENA, -speed);
+    }
+    else {
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, LOW);
+
+
+    }
+  }
+}
+//moves the motor two
+void directionMoveTwo(IN3, IN4, ENB, speed) {
+  if (Speed > 0) {
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENB, speed);
+    else if (speed < 0){
+      digitalWrite(IN3, HIGH);
+      digitalWrite(IN4, LOW);
+      analogWrite(ENA, -speed);
+    }
+    else {
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, LOW);
+
+
+    }
+  }
+}
+//funtion that makes the motors move
+void move(motorOneMove, motorTwoMove) {
+  directionMoveOne(IN1, IN2, ENA, motorOne);
+  directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
+}
+int meterValue(){
+  long duration;
+  digitalWrite(trigPin, LOW);
+  digitalWrite(trigPin, HIGH);
+  delay m
+  duration = pulseIn(echoPin, HIGH);
+
+
+
+
+void setup() {
+Serial.begin(9600);
+pinMode (IN1, OUTPUT);
+pinMode (IN2, OUTPUT);
+pinMode (IN3, OUTPUT);
+pinMode (IN4, OUTPUT);
+pinMode (ENA, OUTPUT);
+pinMode (ENB, OUTPUT);
+pinMode (trigPin, OUTPUT);
+pinMode (trigPin, OUTPUT);
+
+
+//Original code that determined the direction and speed
+//analogWrite(ENA,206);
+//analogWrite(ENB,222);
+//digitalWrite(IN1, LOW);
+//digitalWrite(IN2, HIGH);
+//digitalWrite(IN3, LOW);
+//digitalWrite(IN4, HIGH);
+ 
+}
+void loop(){
+}
