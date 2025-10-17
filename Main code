@@ -77,9 +77,22 @@ void directionMoveTwo(IN3, IN4, ENB, speed) {
 }
 //funtion that makes the motors move
 void move(motorOneMove, motorTwoMove) {
-  directionMoveOne(IN1, IN2, ENA, motorOne);
+  directionMoveOne(IN1, IN2, ENA, motorOneMove);
   directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
 }
+
+void turnRight(){
+  move(12,-12);
+  delay(1000)
+  move(0,0);
+}
+
+void turnLeft(){
+  move(-12,12);
+  delay(1000)
+  move(0,0);
+}
+
 int meterValue(){
   long duration;
   digitalWrite(trigPin, LOW);
