@@ -38,67 +38,63 @@ const int ENB = 9;
 const int trigPin = 13;
 const int echoPin = 12;
 //Moves the motor one
-void directionMoveOne(IN1, IN2, ENA, speed) {
-  if (Speed > 0) {
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-    analogWrite(ENA, speed);
+void directionMoveOne(int in1, int in2, int ena, int speed) {
+  if (speed > 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(ena, speed);
+  }
     else if (speed < 0){
-      digitalWrite(IN1, HIGH);
-      digitalWrite(IN2, LOW);
-      analogWrite(ENA, -speed);
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      analogWrite(ena, -speed);
     }
     else {
-      digitalWrite(IN1, LOW);
-      digitalWrite(IN2, LOW);
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
 
 
     }
   }
-}
+
 //moves the motor two
-void directionMoveTwo(IN3, IN4, ENB, speed) {
-  if (Speed > 0) {
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-    analogWrite(ENB, speed);
+void directionMoveTwo(int in3, int in4, int enb, int speed) {
+  if (speed > 0) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    analogWrite(enb, speed);
+  }
     else if (speed < 0){
-      digitalWrite(IN3, HIGH);
-      digitalWrite(IN4, LOW);
-      analogWrite(ENA, -speed);
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(enb, -speed);
     }
     else {
-      digitalWrite(IN3, LOW);
-      digitalWrite(IN4, LOW);
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
 
 
     }
   }
-}
+
 //funtion that makes the motors move
-void move(motorOneMove, motorTwoMove) {
+void move(int motorOneMove, int motorTwoMove) {
   directionMoveOne(IN1, IN2, ENA, motorOneMove);
   directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
 }
 
 void turnRight(){
-  move(12,-12);
-  delay(1000)
+  move(-206, 222);
+  delay(750);
   move(0,0);
 }
 
 void turnLeft(){
-  move(-12,12);
-  delay(1000)
+  move(206, -222);
+  delay(750);
   move(0,0);
 }
 
-int meterValue(){
-  long duration;
-  digitalWrite(trigPin, LOW);
-  digitalWrite(trigPin, HIGH);
-  delay m
-  duration = pulseIn(echoPin, HIGH);
 
 
 
@@ -114,6 +110,13 @@ pinMode (ENB, OUTPUT);
 pinMode (trigPin, OUTPUT);
 pinMode (trigPin, OUTPUT);
 
+move(206, 222);
+delay(3000);
+move(0, 0);
+delay(3000);
+turnRight();
+delay(3000);
+
 
 //Original code that determined the direction and speed
 //analogWrite(ENA,206);
@@ -125,4 +128,5 @@ pinMode (trigPin, OUTPUT);
  
 }
 void loop(){
+
 }
