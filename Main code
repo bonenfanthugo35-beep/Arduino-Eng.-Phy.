@@ -108,18 +108,18 @@ void loop(){
   distance = duration/58;
   Serial.println(distance);
   delay(200);
-  if (distance > 120){
-    delay(500);
-    move(0,0);
-    delay(500);
-  }
-    else if (distance < 20){
-      delay(100);
-      move(240,180);
-      }
-      else {
-        move(200,200);     
+  if (distance < 20){
+    delay(100);
+    move(240,180);
+    }
+    else {
+      if (distance < 120){ 
+         move(200,200);
+         else{
+             move(0,0);
         }
+}
+}
 }
 
 
