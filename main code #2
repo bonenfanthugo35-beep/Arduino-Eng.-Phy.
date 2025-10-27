@@ -120,11 +120,18 @@ void loop(){
 
 if (distance < 35) {
   // too close to the wall → turn right a bit
-  move(150, 220);
+  if (distance < 25){
+    move(150, 200);
+  }
+    else{
+      move(220, 150);
+    }
 }
-else if (distance > 45 && distance < 120) {
+else if (distance > 55 && distance < 120) {
   // too far from the wall → turn left a bit
   move(220, 150);
+  delay(2000);
+  move(150,200);
 }
 else if (distance >= 35 && distance <= 45) {
   // good distance → go straight
