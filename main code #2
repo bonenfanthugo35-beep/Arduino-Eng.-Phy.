@@ -133,9 +133,9 @@ else if (distance > 55 && distance < 120) {
   delay(2000);
   move(150,200);
 }
-else if (distance >= 35 && distance <= 45) {
+else if (distance >= 35 && distance <= 55) {
   // good distance → go straight
-  move(200, 200);
+  move(252, 200);
 }
 else {
   // no wall detected → stop
