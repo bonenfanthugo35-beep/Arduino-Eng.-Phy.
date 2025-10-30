@@ -77,7 +77,8 @@ pinMode (IN4, OUTPUT);
 pinMode (ENA, OUTPUT);
 pinMode (ENB, OUTPUT);
 pinMode (trigPin, OUTPUT);
-pinMode (trigPin, OUTPUT);
+pinMode (echoPin, INPUT);
+digitalWrite(trigPin, LOW);
 
 //move(206, 222);
 //delay(3000);
