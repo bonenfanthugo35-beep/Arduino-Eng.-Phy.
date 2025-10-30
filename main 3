@@ -1,0 +1,135 @@
+const int IN1 = 8; // Direction pin 1
+const int IN2 = 7; // Direction pin 2
+const int IN3 = 6;
+const int IN4 = 5;
+const int ENA = 3;
+const int ENB = 9;
+const int trigPin = 13;
+const int echoPin = 12;
+//Moves the motor one
+void directionMoveOne(int in1, int in2, int ena, int speed) {
+  if (speed > 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(ena, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      analogWrite(ena, -speed);
+    }
+    else {
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
+
+
+    }
+  }
+
+//moves the motor two
+void directionMoveTwo(int in3, int in4, int enb, int speed) {
+  if (speed > 0) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    analogWrite(enb, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(enb, -speed);
+    }
+    else {
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
+
+
+    }
+  }
+
+//funtion that makes the motors move
+void move(int motorTwoMove, int motorOneMove) {
+  directionMoveOne(IN1, IN2, ENA, motorOneMove);
+  directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
+}
+
+void turnRight(){
+  move(-206, 222);
+  delay(500);
+  move(0,0);
+}
+
+void turnLeft(){
+  move(206, -222);
+  delay(500);
+  move(0,0);
+}
+
+
+
+int intial_distance;
+
+void setup() {
+Serial.begin(9600);
+pinMode (IN1, OUTPUT);
+pinMode (IN2, OUTPUT);
+pinMode (IN3, OUTPUT);
+pinMode (IN4, OUTPUT);
+pinMode (ENA, OUTPUT);
+pinMode (ENB, OUTPUT);
+pinMode (trigPin, OUTPUT);
+pinMode (echoPin, INPUT);
+digitalWrite(trigPin, LOW);
+
+
+long duration;
+int distance;
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+duration = pulseIn(echoPin, HIGH);
+distance = duration/58;
+Serial.println(distance);
+delay(200);
+int initial_distance = distance;
+
+}
+void loop(){
+  long duration;
+  int distance;
+  int initial_distance;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration/58;
+  Serial.println(distance);
+  delay(200);
+ 
+
+ if (distance > initial_distance){
+  move(150,200);
+ }
+    else if (distance < initial_distance){
+    move(200,150);
+ }
+    else if (distance > 200){
+    move(0,0);
+ }
+    else{
+    move(160,180);
+ }
+}
+
+
+
+
+
+ 
+
+
+
+
