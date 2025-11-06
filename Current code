@@ -1,0 +1,144 @@
+/// changes: 
+1. A function for returning distance
+2. An updated logic for the correction system
+
+const int IN1 = 8; // Direction pin 1
+const int IN2 = 7; // Direction pin 2
+const int IN3 = 6;
+const int IN4 = 5;
+const int ENA = 3;
+const int ENB = 9;
+const int trigPin = 13;
+const int echoPin = 12;
+int initial_distance = 0;
+
+//Moves the motor one
+void directionMoveOne(int in1, int in2, int ena, int speed) {
+  if (speed > 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(ena, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      analogWrite(ena, -speed);
+    }
+    else {
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
+
+
+    }
+  }
+
+//moves the motor two
+void directionMoveTwo(int in3, int in4, int enb, int speed) {
+  if (speed > 0) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    analogWrite(enb, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(enb, -speed);
+    }
+    else {
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
+
+
+    }
+  }
+
+//function that makes the motors move
+void move(int motorTwoMove, int motorOneMove) {
+  directionMoveOne(IN1, IN2, ENA, motorOneMove);
+  directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
+}
+
+void turnRight(){
+  move(-206, 222);
+  delay(500);
+  move(0,0);
+}
+
+void turnLeft(){
+  move(206, -222);
+  delay(500);
+  move(0,0);
+}
+
+int getDistance(){
+  long duration;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH, 30000);
+  int distance = duration / 58;
+  Serial.println(distance);
+  return distance; 
+
+
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode (IN1, OUTPUT);
+  pinMode (IN2, OUTPUT);
+  pinMode (IN3, OUTPUT);
+  pinMode (IN4, OUTPUT);
+  pinMode (ENA, OUTPUT);
+  pinMode (ENB, OUTPUT);
+  pinMode (trigPin, OUTPUT);
+  pinMode (echoPin, INPUT);
+
+  delay(1000);
+  //digitalWrite(trigPin, LOW);
+
+  initial_distance = getDistance();
+  Serial.print("Initial distance: ");
+  Serial.println(initial_distance);
+
+}
+void loop(){
+  int distance = getDistance();
+  Serial.print("Current distance: ");
+  Serial.println(distance);
+
+  int tolerance = 5;
+  
+
+  if (distance > 200){
+    move(0,0);
+    Serial.println("No wall");
+  }
+  else if (distance > initial_distance + tolerance){
+    // too far, turn left
+    move(160,255);
+    Serial.println("Too far");
+ }
+  else if (distance < initial_distance - tolerance){
+    // too close, turn right
+    move(255,200);
+    Serial.println("Too close");
+ }
+  else{
+    // correct distance
+     move(200,200);
+     Serial.println("Correct distance");
+ }
+
+ delay(1000);
+}
+
+
+
+
+
+ 
