@@ -1,5 +1,6 @@
 /// changes: 
-1. the system to run through all the courses
+///1. the system to run through all the courses
+///need to verify the turn functions
 
 const int IN1 = 8; // Direction pin 1
 const int IN2 = 7; // Direction pin 2
@@ -59,7 +60,7 @@ void move(int motorTwoMove, int motorOneMove) {
 
 void turnRight(){
   move(-206, 222);
-  delay(500);
+  delay(400);
   move(0,0);
 }
 
@@ -145,7 +146,7 @@ void loop(){
 
    delay(100);
   }
-if pathway = 'C'{
+if pathway = 'B'{
     delay(200);
     if initial_distance_logic = 'X'{
       initial_distance = getDistance();
@@ -155,7 +156,7 @@ if pathway = 'C'{
       move(200,200);
       delay(1000);
       move(0,0);
-      turnright();
+      turnleft();
       pathway = 'C';
       }
     else if (distance > initial_distance + tolerance){
