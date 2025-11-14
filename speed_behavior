@@ -1,0 +1,114 @@
+
+// this code isolate every movement
+
+/// changes: 
+///1. the system to run through all the courses
+///need to verify the turn functions
+
+const int IN1 = 8; // Direction pin 1
+const int IN2 = 7; // Direction pin 2
+const int IN3 = 6;
+const int IN4 = 5;
+const int ENA = 3;
+const int ENB = 9;
+
+
+//Moves the motor one
+void directionMoveOne(int in1, int in2, int ena, int speed) {
+  if (speed > 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(ena, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      analogWrite(ena, -speed);
+    }
+    else {
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
+
+
+    }
+  }
+
+//moves the motor two
+void directionMoveTwo(int in3, int in4, int enb, int speed) {
+  if (speed > 0) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    analogWrite(enb, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(enb, -speed);
+    }
+    else {
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
+
+
+    }
+  }
+
+//function that makes the motors move
+void move(int motorTwoMove, int motorOneMove) {
+  directionMoveOne(IN1, IN2, ENA, motorOneMove);
+  directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
+}
+
+
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode (IN1, OUTPUT);
+  pinMode (IN2, OUTPUT);
+  pinMode (IN3, OUTPUT);
+  pinMode (IN4, OUTPUT);
+  pinMode (ENA, OUTPUT);
+  pinMode (ENB, OUTPUT);
+ 
+  delay(1000);
+
+
+  
+
+}
+void loop(){
+  
+  // move straight
+  //move(100,130);
+
+  // adjust right
+  //move(120,130);
+
+  //adjust left
+  //move(100,170);
+  
+  turn 90 deg right (not finalized) 
+  /*move(200,0);
+  delay(650);
+  move(0,0);
+  delay(1000);
+  */
+
+  turn 90 deg left (not finalized) 
+
+/*
+  move(0,200);
+  delay(650);
+  move(0,0);
+  delay(1000);
+*/
+
+}
+
+
+
+
+
+
+ 
