@@ -63,14 +63,14 @@ void move(int motorTwoMove, int motorOneMove) {
 }
 
 void turnRight(){
-  move(-206, 222);
-  delay(400);
+  move(0, 200);
+  delay(650);
   move(0,0);
 }
 
 void turnLeft(){
-  move(206, -222);
-  delay(500);
+  move(165, 0);
+  delay(750);
   move(0,0);
 }
 
