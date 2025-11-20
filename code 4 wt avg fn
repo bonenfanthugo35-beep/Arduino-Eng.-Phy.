@@ -1,0 +1,238 @@
+/// changes: 
+///1. the system to run through all the courses
+///need to verify the turn functions
+
+const int IN1 = 8; // Direction pin 1
+const int IN2 = 7; // Direction pin 2
+const int IN3 = 6;
+const int IN4 = 5;
+const int ENA = 3;
+const int ENB = 9;
+const int trigPin = 13;
+const int echoPin = 12;
+int initial_distance = 0;
+int distance = 0;
+char pathway = 'A';
+char initial_distance_logic = 'X';
+char move_end =  'N';
+
+//Moves the motor one
+void directionMoveOne(int in1, int in2, int ena, int speed) {
+  if (speed > 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(ena, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in1, HIGH);
+      digitalWrite(in2, LOW);
+      analogWrite(ena, -speed);
+    }
+    else {
+      digitalWrite(in1, LOW);
+      digitalWrite(in2, LOW);
+
+
+    }
+  }
+
+//moves the motor two
+void directionMoveTwo(int in3, int in4, int enb, int speed) {
+  if (speed > 0) {
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+    analogWrite(enb, speed);
+  }
+    else if (speed < 0){
+      digitalWrite(in3, HIGH);
+      digitalWrite(in4, LOW);
+      analogWrite(enb, -speed);
+    }
+    else {
+      digitalWrite(in3, LOW);
+      digitalWrite(in4, LOW);
+
+
+    }
+  }
+
+//function that makes the motors move
+void move(int motorTwoMove, int motorOneMove) {
+  directionMoveOne(IN1, IN2, ENA, motorOneMove);
+  directionMoveTwo(IN3, IN4, ENB, motorTwoMove);
+}
+
+void turnRight(){
+  move(200, 0);
+  delay(650);
+  move(0,0);
+}
+
+void turnLeft(){
+  move(0, 160);
+  delay(750);
+  move(0,0);
+}
+
+int getDistance(){
+  long duration;
+  int reading;
+  int sum = 0;
+  int count =0;
+
+  for (int i = 0; i < 5; i++){
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);
+
+    duration = pulseIn(echoPin, HIGH, 30000);
+
+    if (duration == 0) {
+      reading = -1;  // treat it as “very far”
+    } else {
+        reading = duration / 58;
+    }
+    
+    if (reading >= 0) {
+      sum += reading;
+      count++;
+    }
+    delay(20);
+  }
+
+  if (count == 0){
+    return -1;
+  }
+  distance = sum / count ;
+  Serial.println(distance);
+  return distance; 
+  delay(300);
+
+
+}
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode (IN1, OUTPUT);
+  pinMode (IN2, OUTPUT);
+  pinMode (IN3, OUTPUT);
+  pinMode (IN4, OUTPUT);
+  pinMode (ENA, OUTPUT);
+  pinMode (ENB, OUTPUT);
+  pinMode (trigPin, OUTPUT);
+  pinMode (echoPin, INPUT);
+
+  delay(1000);
+  //digitalWrite(trigPin, LOW);
+
+  initial_distance = getDistance();
+  Serial.print("Initial distance: ");
+  Serial.println(initial_distance);
+
+  }
+void loop(){
+  int distance = getDistance();
+  Serial.print("Current distance: ");
+  Serial.println(distance);
+
+  int tolerance = 5;
+  if (move_end == 'N'){
+    if (pathway == 'A'){
+      if (distance > 100){
+        move(100,130);
+        delay(1000);
+        move(0,0);
+        turnRight();
+        (delay(5000));
+        pathway = 'B';
+        }
+      else if (distance > initial_distance + tolerance){
+       // too far, turn left
+       move(90,200);
+        Serial.println("Too far");
+      }
+     else if (distance < initial_distance - tolerance){
+       // too close, turn right
+      move(120,130);
+      Serial.println("Too close");
+     }
+    else{
+      // correct distance
+       move(100,130);
+       Serial.println("Correct distance");
+     }
+
+   delay(100);
+  }
+if (pathway == 'B'){
+    delay(200);
+    if (initial_distance_logic == 'X'){
+      initial_distance = getDistance();
+      initial_distance_logic = 'Y';
+    }
+    if (distance > 100){
+      move(100,130);
+      delay(1000);
+      move(0,0);
+      turnLeft();
+      delay(1500);
+      move(100,130);
+      delay(1000);
+      move(0,0);
+      delay(5000);
+    
+      pathway = 'C';
+      }
+    else if (distance > initial_distance + tolerance){
+      // too far, turn left
+      move(90,200);
+      Serial.println("Too far");
+     }
+    else if (distance < initial_distance - tolerance){
+      // too close, turn right
+      move(120,130);
+      Serial.println("Too close");
+     }
+    else{
+      // correct distance
+       move(100,130);
+       Serial.println("Correct distance");
+     }
+
+   delay(100);
+  }
+if (pathway == 'C'){
+    delay(200);
+    if (initial_distance_logic == 'Y'){
+      initial_distance = getDistance();
+      initial_distance_logic = 'Z';
+    }
+    if (distance > 100){
+      move_end = 'M';
+      }
+    else if (distance > initial_distance + tolerance){
+      // too far, turn left
+      move(90,200);
+      Serial.println("Too far");
+     }
+    else if (distance < initial_distance - tolerance){
+      // too close, turn right
+      move(120,130);
+      Serial.println("Too close");
+     }
+    else{
+      // correct distance
+       move(100,130);
+       Serial.println("Correct distance");
+     }
+
+   delay(100);
+  }
+}
+else{
+  move(0,0);
+}
+}
