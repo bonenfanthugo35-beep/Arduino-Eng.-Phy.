@@ -135,9 +135,9 @@ void setup() {
   }
 void loop(){
   int distance = getDistance();
-  Serial.print("Current distance: ");
-  Serial.println(distance);
-
+   Serial.print("Current distance: ");
+   Serial.println(distance);
+  
   int tolerance = 5;
   if (move_end == 'N'){
     if (pathway == 'A'){
@@ -156,7 +156,7 @@ void loop(){
       }
      else if (distance < initial_distance - tolerance){
        // too close, turn right
-      move(160,130);
+      move(130,130);
       Serial.println("Too close");
      }
     else{
@@ -193,7 +193,7 @@ if (pathway == 'B'){
      }
     else if (distance < initial_distance - tolerance){
       // too close, turn right
-      move(160,130);
+      move(130,130);
       Serial.println("Too close");
      }
     else{
@@ -220,7 +220,7 @@ if (pathway == 'C'){
      }
     else if (distance < initial_distance - tolerance){
       // too close, turn right
-      move(160,130);
+      move(130,130);
       Serial.println("Too close");
      }
     else{
