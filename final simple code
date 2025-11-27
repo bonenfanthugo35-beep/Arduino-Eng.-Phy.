@@ -172,12 +172,13 @@ void loop(){
 if (pathway == 'B'){
     delay(200);
     if (initial_distance_logic == 'X'){
+      delay(1000)
       initial_distance = getDistance();
       initial_distance_logic = 'Y';
       delay(200);
       Serial.println(initial_distance);
     }
-    else if (distance > initial_distance + tolerance){
+    if (distance > initial_distance + tolerance){
       // too far, turn left
       move(90,200);
       Serial.println("Too far");
