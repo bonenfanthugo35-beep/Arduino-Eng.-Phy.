@@ -172,7 +172,7 @@ void loop(){
 if (pathway == 'B'){
     delay(200);
     if (initial_distance_logic == 'X'){
-      delay(1000)
+      delay(1000);
       initial_distance = getDistance();
       initial_distance_logic = 'Y';
       delay(200);
