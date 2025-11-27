@@ -157,7 +157,7 @@ void loop(){
       }
      else if (distance < initial_distance - tolerance){
        // too close, turn right
-      move(115,130);
+      move(140,130);
       Serial.println("Too close");
      }
     else{
@@ -185,9 +185,12 @@ if (pathway == 'B'){
      }
     else if (distance < initial_distance - tolerance){
       // too close, turn right
-      move(120,130);
+      move(140,130);
       Serial.println("Too close");
      }
+    else if (distance > 150){
+        move(100,130);
+    }
     else{
       // correct distance
        move(100,130);
